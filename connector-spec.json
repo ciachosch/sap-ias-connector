@@ -1,0 +1,266 @@
+{
+	"name": "sap-ias-connector",
+	"commands": [
+		"std:account:list",
+		"std:account:read",
+		"std:test-connection",
+		"std:account:enable",
+		"std:account:disable",
+		"std:account:create",
+		"std:account:update",
+		"std:account:delete",
+		"std:entitlement:list"
+	],
+	"sourceConfig": [
+		{
+			"type": "menu",
+			"label": "Configuration",
+			"items": [
+				{
+					"type": "section",
+					"sectionTitle": "Authentication",
+					"sectionHelpMessage": "Provide connection parameters to interact securely with the target application.",
+					"items": [
+						{
+							"key": "baseUrl",
+							"label": "SAP IAS Base URL",
+							"type": "text",
+							"required": true
+						},
+						{
+							"key": "clientId",
+							"label": "Client ID",
+							"type": "text",
+							"required": true
+						},
+						{
+							"key": "clientSecret",
+							"label": "Client Secret",
+							"type": "secret",
+							"required": true
+						}
+					]
+				}
+			]
+		}
+	],
+	"accountSchema": {
+		"displayAttribute": "userName",
+		"identityAttribute": "userName",
+		"attributes": [
+			{
+				"name": "userName",
+				"type": "string",
+				"description": "Unique username of the account",
+				"required": true
+			},
+			{
+				"name": "id",
+				"type": "string",
+				"description": "Internal SAP IAS user ID (UUID)"
+			},
+			{
+				"name": "locked",
+				"type": "boolean",
+				"description": "Whether the account is locked (inverse of SAP IAS active flag)"
+			},
+			{
+				"name": "active",
+				"type": "boolean",
+				"description": "Whether the account is active in SAP IAS"
+			},
+{
+				"name": "givenName",
+				"type": "string",
+				"description": "First name of the account"
+			},
+			{
+				"name": "familyName",
+				"type": "string",
+				"description": "Last name of the account"
+			},
+			{
+				"name": "email",
+				"type": "string",
+				"description": "Primary email of the account"
+			},
+			{
+				"name": "sapUserId",
+				"type": "string",
+				"description": "SAP user ID from SCIM extension (e.g. P000001)"
+			},
+			{
+				"name": "sapUserUuid",
+				"type": "string",
+				"description": "SAP user UUID from SCIM extension"
+			},
+			{
+				"name": "displayName",
+				"type": "string",
+				"description": "Display name of the account"
+			},
+			{
+				"name": "userType",
+				"type": "string",
+				"description": "User type (e.g. public, employee)"
+			},
+			{
+				"name": "language",
+				"type": "string",
+				"description": "Preferred language (preferredLanguage)"
+			},
+			{
+				"name": "timezone",
+				"type": "string",
+				"description": "User timezone"
+			},
+			{
+				"name": "phoneNumber",
+				"type": "string",
+				"description": "Primary phone number"
+			},
+			{
+				"name": "costCenter",
+				"type": "string",
+				"description": "Cost center from enterprise extension"
+			},
+			{
+				"name": "division",
+				"type": "string",
+				"description": "Division from enterprise extension"
+			},
+			{
+				"name": "employeeNumber",
+				"type": "string",
+				"description": "Employee number from enterprise extension"
+			},
+			{
+				"name": "organization",
+				"type": "string",
+				"description": "Organization (corp) from enterprise extension"
+			},
+			{
+				"name": "manager",
+				"type": "string",
+				"description": "Manager id (vwgManagerUID) from SAP custom extension customAttribute7"
+			},
+			{
+				"name": "validFrom",
+				"type": "string",
+				"description": "Account validity start date from SAP extension"
+			},
+			{
+				"name": "validTo",
+				"type": "string",
+				"description": "Account validity end date from SAP extension"
+			},
+			{
+				"name": "country",
+				"type": "string",
+				"description": "Country from addresses[0].country"
+			},
+			{
+				"name": "isEmailVerified",
+				"type": "boolean",
+				"description": "Whether the primary email address is verified"
+			},
+			{
+				"name": "groups",
+				"type": "string",
+				"description": "Groups the user is a member of",
+				"multi": true,
+				"entitlement": true
+			},
+			{
+				"name": "loginName",
+				"type": "string",
+				"description": "Login name from SAP IAS SCIM extension"
+			},
+			{
+				"name": "vwgPersonenStatus",
+				"type": "string",
+				"description": "Person status from PAG carisma extension"
+			},
+			{
+				"name": "companyCode",
+				"type": "string",
+				"description": "Company code (H* except H055) from PAG carisma extension"
+			},
+			{
+				"name": "mgmtLevel",
+				"type": "string",
+				"description": "Management level identifier from PAG carisma extension"
+			},
+			{
+				"name": "vwgResponsible",
+				"type": "string",
+				"description": "Internal responsible person from PAG carisma extension"
+			},
+			{
+				"name": "ntprimaryUserAccount",
+				"type": "string",
+				"description": "AD account (SAMAccountName) for SNC from PAG carisma extension"
+			},
+			{
+				"name": "cisoLiso",
+				"type": "string",
+				"description": "CISO/LISO flag from PAG carisma extension (future)"
+			},
+			{
+				"name": "externalEmail",
+				"type": "string",
+				"description": "Secondary email (partnerEmail/vwgMailExternal) written as emails type:other"
+			},
+			{
+				"name": "x509Certificate",
+				"type": "string",
+				"description": "2MFA certificate (ucActualDN) written as x509Certificates value — pending IAM clarification"
+			}
+		]
+	},
+	"entitlementSchemas": [
+		{
+			"type": "group",
+			"displayAttribute": "displayName",
+			"identityAttribute": "id",
+			"attributes": [
+				{
+					"name": "id",
+					"type": "string",
+					"description": "SAP IAS Group UUID"
+				},
+				{
+					"name": "displayName",
+					"type": "string",
+					"description": "Display name of the group"
+				},
+				{
+					"name": "name",
+					"type": "string",
+					"description": "Technical name from SAP custom extension"
+				},
+				{
+					"name": "description",
+					"type": "string",
+					"description": "Group description"
+				},
+				{
+					"name": "type",
+					"type": "string",
+					"description": "Group type (e.g. userGroup)"
+				},
+				{
+					"name": "applicationId",
+					"type": "string",
+					"description": "SAP application ID"
+				}
+			]
+		}
+	],
+	"features": [
+		"PROVISIONING",
+		"ENABLE",
+		"SYNC_PROVISIONING",
+		"DELETE"
+	]
+}
